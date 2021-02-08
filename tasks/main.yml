@@ -1,0 +1,15 @@
+---
+
+- name: Set hostname
+  become: yes
+  hostname:
+    name: '{{ hostname }}'
+
+- name: Set /etc/hosts hostname
+  become: yes
+  lineinfile:
+    dest: /etc/hosts
+    regexp: '(127.0.1.1\s+).+$'
+    backrefs: yes
+    line: '\g<1>{{ hostname }}'
+    state: present
